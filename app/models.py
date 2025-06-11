@@ -171,4 +171,4 @@ class Multa(Base):
         CheckConstraint('dias_atraso >= 0', name='check_dias_atraso'),
         CheckConstraint('valor_por_dia >= 0', name='check_valor_por_dia'),
         Index('idx_multa_status', 'status', 'data_geracao'),
-    )
+    ) 
