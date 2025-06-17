@@ -4,9 +4,6 @@ from database import engine, Base
 from app.models import Usuario, Categoria, Livro, Emprestimo, Reserva, Multa
 from app.routes import usuarios, categorias, livros, emprestimos, reservas, multas
 
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="API de Biblioteca",
     description="API para gerenciamento de biblioteca com usuários, livros e empréstimos",
@@ -14,7 +11,8 @@ app = FastAPI(
 )
 
 @app.on_event("startup")
-def on_startup() -> None:
+async def startup():
+    # Criar todas as tabelas
     Base.metadata.create_all(bind=engine)
 
 @app.get("/")

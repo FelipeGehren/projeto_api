@@ -22,9 +22,13 @@ class Usuario(Base):
     matricula = Column(String(20), unique=True, nullable=True)  # Para funcionários
     data_cadastro = Column(DateTime, default=datetime.utcnow)
     ativo = Column(Boolean, default=True)
-    
+
     # Relacionamentos
-    emprestimos = relationship("Emprestimo", back_populates="usuario")
+    emprestimos = relationship(
+        "Emprestimo",
+        back_populates="usuario",
+        foreign_keys=[lambda: Emprestimo.usuario_id]
+    )
     reservas = relationship("Reserva", back_populates="usuario")
 
 class Categoria(Base):

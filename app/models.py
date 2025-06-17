@@ -43,10 +43,24 @@ class Usuario(Base):
     limite_emprestimos = Column(Integer, default=3, nullable=False)
     
     # Relacionamentos
-    emprestimos = relationship("Emprestimo", back_populates="usuario", cascade="all, delete-orphan")
-    reservas = relationship("Reserva", back_populates="usuario", cascade="all, delete-orphan")
-    emprestimos_registrados = relationship("Emprestimo", back_populates="funcionario", 
-                                         foreign_keys="Emprestimo.funcionario_id")
+    emprestimos = relationship(
+        "Emprestimo",
+        back_populates="usuario",
+        primaryjoin="Usuario.id == Emprestimo.usuario_id",
+        cascade="all, delete-orphan"
+    )
+    
+    reservas = relationship(
+        "Reserva",
+        back_populates="usuario",
+        cascade="all, delete-orphan"
+    )
+    
+    emprestimos_registrados = relationship(
+        "Emprestimo",
+        back_populates="funcionario",
+        primaryjoin="Usuario.id == Emprestimo.funcionario_id"
+    )
 
     __table_args__ = (
         CheckConstraint('(tipo = \'funcionario\' AND matricula IS NOT NULL) OR (tipo != \'funcionario\' AND matricula IS NULL)',
@@ -118,9 +132,17 @@ class Emprestimo(Base):
     dias_emprestimo = Column(Integer, default=15, nullable=False)
     
     # Relacionamentos
-    usuario = relationship("Usuario", foreign_keys=[usuario_id], back_populates="emprestimos")
+    usuario = relationship(
+        "Usuario",
+        back_populates="emprestimos",
+        foreign_keys=[usuario_id]
+    )
     livro = relationship("Livro", back_populates="emprestimos")
-    funcionario = relationship("Usuario", foreign_keys=[funcionario_id], back_populates="emprestimos_registrados")
+    funcionario = relationship(
+        "Usuario",
+        back_populates="emprestimos_registrados",
+        foreign_keys=[funcionario_id]
+    )
     multas = relationship("Multa", back_populates="emprestimo", cascade="all, delete-orphan")
 
     __table_args__ = (
