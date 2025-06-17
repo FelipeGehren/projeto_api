@@ -3,28 +3,26 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 import enum
 from database import Base
+from .enums import TipoUsuario, StatusEmprestimo, StatusReserva, StatusMulta
+from .usuario import Usuario
+from .categoria import Categoria
+from .livro import Livro
+from .emprestimo import Emprestimo
+from .reserva import Reserva
+from .multa import Multa
 
-class TipoUsuario(enum.Enum):
-    CLIENTE = "cliente"
-    FUNCIONARIO = "funcionario"
-    ADMINISTRADOR = "administrador"
-
-class StatusEmprestimo(enum.Enum):
-    ATIVO = "ativo"
-    DEVOLVIDO = "devolvido"
-    ATRASADO = "atrasado"
-    PERDIDO = "perdido"
-
-class StatusReserva(enum.Enum):
-    PENDENTE = "pendente"
-    CONCLUIDA = "concluida"
-    CANCELADA = "cancelada"
-    EXPIRADA = "expirada"
-
-class StatusMulta(enum.Enum):
-    PENDENTE = "pendente"
-    PAGO = "pago"
-    CANCELADA = "cancelada"
+__all__ = [
+    'TipoUsuario',
+    'StatusEmprestimo',
+    'StatusReserva',
+    'StatusMulta',
+    'Usuario',
+    'Categoria',
+    'Livro',
+    'Emprestimo',
+    'Reserva',
+    'Multa'
+]
 
 class Usuario(Base):
     __tablename__ = "usuarios"
