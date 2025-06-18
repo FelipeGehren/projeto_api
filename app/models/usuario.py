@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum, Boolean, CheckConstraint, Index
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from .enums import TipoUsuario
+from app.models.enums import TipoUsuario
 from database import Base
 
 class Usuario(Base):

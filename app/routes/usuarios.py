@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
+from pydantic import BaseModel, EmailStr, Field
 
 from database import get_db
 from app.models import Usuario, TipoUsuario
-from pydantic import BaseModel, EmailStr, constr
 
 router = APIRouter(
     prefix="/usuarios",
@@ -14,10 +14,10 @@ router = APIRouter(
 
 # Schema para criação de usuário
 class UsuarioCreate(BaseModel):
-    nome_completo: constr(min_length=3, max_length=100)
-    cpf: constr(regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$')
-    telefone: constr(regex=r'^\(\d{2}\) \d{5}-\d{4}$')
-    endereco: constr(min_length=5, max_length=200)
+    nome_completo: str = Field(min_length=3, max_length=100)
+    cpf: str = Field(pattern=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$')
+    telefone: str = Field(pattern=r'^\(\d{2}\) \d{5}-\d{4}$')
+    endereco: str = Field(min_length=5, max_length=200)
     email: EmailStr
     tipo: TipoUsuario = TipoUsuario.CLIENTE
     matricula: str | None = None

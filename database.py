@@ -30,7 +30,8 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Base(DeclarativeBase):
-    pass
+    __abstract__ = True
+    __table_args__ = {'extend_existing': True}
 
 def get_db():
     db = SessionLocal()
