@@ -86,7 +86,7 @@ def criar_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
                 )
         
         # Criar novo usuário
-        db_usuario = Usuario(**usuario.model_dump())
+        db_usuario = Usuario(**usuario.model_dump()) 
         db.add(db_usuario)
         db.commit()
         db.refresh(db_usuario)
@@ -187,7 +187,7 @@ def atualizar_usuario(
     except Exception as e:
         db.rollback()
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.HTTP_400_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao atualizar usuário: {str(e)}"
         )
 
@@ -221,7 +221,7 @@ def deletar_usuario(usuario_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.HTTP_400_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao deletar usuário: {str(e)}"
         )
 
@@ -254,6 +254,6 @@ def alterar_status_usuario(
     except Exception as e:
         db.rollback()
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.HTTP_400_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao alterar status do usuário: {str(e)}"
         ) 
