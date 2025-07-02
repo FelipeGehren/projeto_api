@@ -29,6 +29,8 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+Base = DeclarativeBase()
+
 class Base(DeclarativeBase):
     __abstract__ = True
     __table_args__ = {'extend_existing': True}
